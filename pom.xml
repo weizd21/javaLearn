@@ -7,5 +7,57 @@
     <groupId>top.oldwei</groupId>
     <artifactId>javaLearn</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>spring-boot-logback</module>
+    </modules>
     <packaging>pom</packaging>
+
+    <name>oldwei_javaLearn</name>
+
+
+    <properties>
+        <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
+        <mysql.version>8.0.16</mysql.version>
+        <hutool.version>4.6.2</hutool.version>
+        <guava.version>28.0-jre</guava.version>
+        <user.agent.version> 1.21</user.agent.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!-- hutool工具类 -->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <!-- guava工具类 -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+            <!-- 解析 UserAgent 信息 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${user.agent.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+
 </project>

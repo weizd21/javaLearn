@@ -1,0 +1,6 @@
+server:
+  port: 7000
+
+logging:
+  config: classpath:logback-spring.xml
+  path: /home/ap/nas_a/logback
