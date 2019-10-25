@@ -3,7 +3,8 @@ package top.oldwei.netty.server;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.nio.charset.Charset;
 import java.util.Date;
@@ -12,19 +13,20 @@ import java.util.Date;
  * @Author:weizd
  * @Date:19-10-22
  */
-
 public class FirstServerHandler extends ChannelInboundHandlerAdapter {
+
+    private static Logger logger = LoggerFactory.getLogger(FirstServerHandler.class);
 
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) {
         ByteBuf byteBuf = (ByteBuf) msg;
 
-        System.out.println("[ByteBuf] capacity:"+byteBuf.capacity());
-        System.out.println("[ByteBuf] maxCapacity:"+byteBuf.maxCapacity());
+        logger.info("[ByteBuf] capacity:"+byteBuf.capacity());
+        logger.info("[ByteBuf] maxCapacity:"+byteBuf.maxCapacity());
 
-        System.out.println(new Date() + ": 服务端读到数据 -> " + byteBuf.toString(Charset.forName("utf-8")));
-        System.out.println(new Date() + ": 服务端写出数据");
+        logger.info(new Date() + ": 服务端读到数据 -> " + byteBuf.toString(Charset.forName("utf-8")));
+        logger.info(new Date() + ": 服务端写出数据");
         ByteBuf out = getByteBuf(ctx);
         ctx.channel().writeAndFlush(out);
     }
