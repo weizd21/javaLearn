@@ -1,12 +1,29 @@
 package top.oldwei.netty.client;
 
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.crypto.SecureUtil;
+import com.alibaba.fastjson.JSONObject;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import top.oldwei.netty.base.PacketCodeC;
+import top.oldwei.netty.constant.Base;
+import top.oldwei.netty.domain.LoginRequestPacket;
+import top.oldwei.netty.domain.MessageRequestPacket;
+import top.oldwei.netty.handler.ClientHandler;
+import top.oldwei.netty.handler.LoginResponseHandler;
+import top.oldwei.netty.handler.MessageResponseHandler;
+import top.oldwei.netty.handler.PacketDecoder;
+import top.oldwei.netty.handler.PacketEncoder;
+import top.oldwei.netty.handler.Spliter;
+import top.oldwei.netty.util.LoginUtil;
 
 import java.nio.channels.SocketChannel;
+import java.util.Scanner;
 
 /**
  * @Author:weizd
@@ -28,18 +45,17 @@ public class NettyClient {
                 .handler(new ChannelInitializer<Channel>() {
                     @Override
                     protected void initChannel(Channel channel) throws Exception {
-                        channel.pipeline().addLast(new FirstClientHandler());
+                        //channel.pipeline().addLast(new ClientHandler());
+                        channel.pipeline().addLast(new Spliter());
+                        channel.pipeline().addLast(new PacketDecoder());
+                        channel.pipeline().addLast(new LoginResponseHandler());
+                        channel.pipeline().addLast(new MessageResponseHandler());
+                        channel.pipeline().addLast(new PacketEncoder());
                     }
                 });
-//                .handler(new ChannelInitializer<SocketChannel>() {
-//                    @Override
-//                    public void initChannel(SocketChannel ch) {
-//
-//                    }
-//                });
-        // 4.建立连接
-//        bootstrap.connect("juejin.im", 80).addListener(future -> {
 
+
+        // 4.建立连接
         bootstrap.connect("127.0.0.1", 8600).addListener(future -> {
             if (future.isSuccess()) {
 
@@ -51,7 +67,7 @@ public class NettyClient {
                 System.out.println("连接成功!");
 
 
-
+                startConsoleThread(((ChannelFuture)future).channel());
 
 
             } else {
@@ -62,9 +78,43 @@ public class NettyClient {
 
 
 
-
-
     }
 
+
+
+
+    private static void startConsoleThread(Channel channel){
+        new Thread(()->{
+
+            LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+            loginRequestPacket.setUserId(IdUtil.getSnowflake(Base.WORK_ID,Base.DATA_CENTER_ID).nextId());
+            loginRequestPacket.setUsername(IdUtil.fastSimpleUUID());
+            loginRequestPacket.setPassword(SecureUtil.md5(loginRequestPacket.getUsername()));
+
+            channel.writeAndFlush(loginRequestPacket);
+
+
+            while (!Thread.interrupted()){
+                if(LoginUtil.hasLogin(channel)){
+                    Scanner scanner = new Scanner(System.in);
+
+                    String line = scanner.nextLine();
+
+                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+                    messageRequestPacket.setMsg(line);
+
+                    // ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(messageRequestPacket);
+                    for(int i =0 ;i<100;i++){
+                        channel.writeAndFlush(messageRequestPacket);
+                    }
+
+                    System.out.println("MessageRequest:"+ JSONObject.toJSONString(messageRequestPacket));
+                }
+
+
+            }
+
+        }).start();
+    }
 
 }

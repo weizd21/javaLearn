@@ -1,11 +1,14 @@
 package top.oldwei.netty.base;
 
-import cn.hutool.core.util.StrUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import top.oldwei.netty.constant.Base;
 import top.oldwei.netty.constant.Command;
 import top.oldwei.netty.constant.SerializerAlgorithm;
 import top.oldwei.netty.domain.LoginRequestPacket;
+import top.oldwei.netty.domain.LoginResponsePacket;
+import top.oldwei.netty.domain.MessageRequestPacket;
+import top.oldwei.netty.domain.MessageResponsePacket;
 import top.oldwei.netty.domain.Packet;
 import top.oldwei.netty.serializer.Serializer;
 
@@ -13,17 +16,35 @@ import top.oldwei.netty.serializer.Serializer;
  * @Author:weizd
  * @Date:19-10-28
  */
-public class PackCodeC {
+public class PacketCodeC {
 
-    private static final  int MAGIC_NUMBER = 0x12345678;
 
+    public final static PacketCodeC INSTANCE = new PacketCodeC();
+
+
+    public void encode(Packet packet,ByteBuf byteBuf){
+        byte[] bytes = Serializer.DEFAULT.serialize(packet);
+        // 魔法数据 代表收到的数据是约定的内容
+        byteBuf.writeInt(Base.MAGIC_NUMBER);
+        // 版本
+        byteBuf.writeByte(packet.getVersion());
+        // 序列化算法标识
+        byteBuf.writeByte(Serializer.DEFAULT.getSerializerAlgorithm());
+        //
+        byteBuf.writeByte(packet.getCommand());
+        byteBuf.writeInt(bytes.length);
+        byteBuf.writeBytes(bytes);
+    }
+
+
+    @Deprecated
     public ByteBuf encode(Packet packet){
 
         ByteBuf byteBuf = ByteBufAllocator.DEFAULT.ioBuffer();
 
         byte[] bytes = Serializer.DEFAULT.serialize(packet);
         // 魔法数据 代表收到的数据是约定的内容
-        byteBuf.writeInt(MAGIC_NUMBER);
+        byteBuf.writeInt(Base.MAGIC_NUMBER);
         // 版本
         byteBuf.writeByte(packet.getVersion());
         // 序列化算法标识
@@ -69,6 +90,12 @@ public class PackCodeC {
 
         if(command == Command.LOGIN_REQUEST){
             return LoginRequestPacket.class;
+        }else if(command == Command.LOGIN_RESPONSE){
+            return LoginResponsePacket.class;
+        }else if(command == Command.MESSAGE_REQUEST){
+            return MessageRequestPacket.class;
+        }else if(command == Command.MESSAGE_RESPONSE){
+            return MessageResponsePacket.class;
         }
         return null;
     }

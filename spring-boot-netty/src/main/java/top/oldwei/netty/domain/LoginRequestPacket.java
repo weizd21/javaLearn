@@ -10,7 +10,7 @@ import top.oldwei.netty.constant.Command;
 @Data
 public class LoginRequestPacket extends Packet {
 
-    private Integer userId;
+    private Long userId;
 
     private String username;
 
