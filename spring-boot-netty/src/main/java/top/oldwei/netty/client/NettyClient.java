@@ -11,6 +11,7 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import top.oldwei.netty.base.PacketCodeC;
+import top.oldwei.netty.command.LoginConsoleCommand;
 import top.oldwei.netty.constant.Base;
 import top.oldwei.netty.domain.LoginRequestPacket;
 import top.oldwei.netty.domain.MessageRequestPacket;
@@ -21,6 +22,7 @@ import top.oldwei.netty.handler.PacketDecoder;
 import top.oldwei.netty.handler.PacketEncoder;
 import top.oldwei.netty.handler.Spliter;
 import top.oldwei.netty.util.LoginUtil;
+import top.oldwei.netty.util.SessionUtil;
 
 import java.nio.channels.SocketChannel;
 import java.util.Scanner;
@@ -59,11 +61,6 @@ public class NettyClient {
         bootstrap.connect("127.0.0.1", 8600).addListener(future -> {
             if (future.isSuccess()) {
 
-
-
-
-
-
                 System.out.println("连接成功!");
 
 
@@ -85,30 +82,20 @@ public class NettyClient {
 
     private static void startConsoleThread(Channel channel){
         new Thread(()->{
-
-            LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
-            loginRequestPacket.setUserId(IdUtil.getSnowflake(Base.WORK_ID,Base.DATA_CENTER_ID).nextId());
-            loginRequestPacket.setUsername(IdUtil.fastSimpleUUID());
-            loginRequestPacket.setPassword(SecureUtil.md5(loginRequestPacket.getUsername()));
-
-            channel.writeAndFlush(loginRequestPacket);
-
-
+            Scanner scanner = new Scanner(System.in);
+            LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
             while (!Thread.interrupted()){
                 if(LoginUtil.hasLogin(channel)){
-                    Scanner scanner = new Scanner(System.in);
 
-                    String line = scanner.nextLine();
 
-                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
-                    messageRequestPacket.setMsg(line);
-
-                    // ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(messageRequestPacket);
-                    for(int i =0 ;i<100;i++){
-                        channel.writeAndFlush(messageRequestPacket);
+                }else{
+                    loginConsoleCommand.exec(scanner,channel);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
 
-                    System.out.println("MessageRequest:"+ JSONObject.toJSONString(messageRequestPacket));
                 }
 
 
@@ -116,5 +103,61 @@ public class NettyClient {
 
         }).start();
     }
+
+
+
+//    private static void startConsoleThreadOld(Channel channel){
+//        new Thread(()->{
+//            Scanner scanner = new Scanner(System.in);
+//
+//            while (!Thread.interrupted()){
+//                if(LoginUtil.hasLogin(channel)){
+//
+//                    System.out.print("输入接收用户: ");
+//                    String toUserId = scanner.nextLine();
+//                    System.out.print("输入消息: ");
+//                    String message = scanner.nextLine();
+//                    MessageRequestPacket messageRequestPacket = new MessageRequestPacket();
+//                    messageRequestPacket.setToUserId(toUserId);
+//                    messageRequestPacket.setMsg(message);
+//
+////                    // ByteBuf byteBuf = PacketCodeC.INSTANCE.encode(messageRequestPacket);
+////                    for(int i =0 ;i<100;i++){
+////                        channel.writeAndFlush(messageRequestPacket);
+////                    }
+//
+//                    System.out.println("MessageRequest:"+ JSONObject.toJSONString(messageRequestPacket));
+//                    channel.writeAndFlush(messageRequestPacket);
+////                    try {
+//////                        tryThread.sleep(1000);
+////                    } catch (InterruptedException e) {
+////                        e.printStackTrace();
+////                    }
+//
+//                }else{
+//                    LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+//                    System.out.print("输入用户名登录: ");
+//                    String username = scanner.nextLine();
+//                    loginRequestPacket.setUsername(username);
+//
+//                    loginRequestPacket.setUserId(IdUtil.getSnowflake(Base.WORK_ID,Base.DATA_CENTER_ID).nextId());
+////                    loginRequestPacket.setUsername(IdUtil.fastSimpleUUID());
+//                    loginRequestPacket.setPassword(SecureUtil.md5(loginRequestPacket.getUsername()));
+//
+//                    channel.writeAndFlush(loginRequestPacket);
+//
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//
+//
+//            }
+//
+//        }).start();
+//    }
 
 }

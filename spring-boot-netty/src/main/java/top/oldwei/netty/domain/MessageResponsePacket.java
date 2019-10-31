@@ -17,7 +17,9 @@ public class MessageResponsePacket extends Packet{
 
     private String msg;
 
-    
+
+    private String fromUserId;
+
 
 
 }

@@ -1,6 +1,7 @@
 package top.oldwei.netty.constant;
 
 import io.netty.util.AttributeKey;
+import top.oldwei.netty.domain.Session;
 
 /**
  * @Author:weizd
@@ -11,6 +12,8 @@ public interface Attribute {
 
     AttributeKey<Boolean> LOGIN = AttributeKey.newInstance("login");
 
+
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 
 
 }

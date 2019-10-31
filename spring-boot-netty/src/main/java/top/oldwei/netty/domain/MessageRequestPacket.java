@@ -16,7 +16,7 @@ public class MessageRequestPacket extends Packet {
 
     private String msg;
 
-
+    private String toUserId;
 
 
 

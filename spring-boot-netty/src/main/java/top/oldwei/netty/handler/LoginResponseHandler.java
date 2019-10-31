@@ -23,10 +23,11 @@ public class LoginResponseHandler extends SimpleChannelInboundHandler<LoginRespo
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, LoginResponsePacket loginResponsePacket) throws Exception {
 
 
-        logger.info("---> loginResponseHandler:{}", JSONObject.toJSONString(loginResponsePacket));
+//        logger.info("---> loginResponseHandler:{}", JSONObject.toJSONString(loginResponsePacket));
 
 
         LoginUtil.markAsLogin(channelHandlerContext.channel());
+
 
 
 
