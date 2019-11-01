@@ -12,7 +12,7 @@ public class LoginRequestPacket extends Packet {
 
     private Long userId;
 
-    private String username;
+    private String userName;
 
     private String password;
 

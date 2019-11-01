@@ -12,6 +12,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import top.oldwei.netty.base.PacketCodeC;
 import top.oldwei.netty.command.LoginConsoleCommand;
+import top.oldwei.netty.command.SendMessageConsoleCommand;
 import top.oldwei.netty.constant.Base;
 import top.oldwei.netty.domain.LoginRequestPacket;
 import top.oldwei.netty.domain.MessageRequestPacket;
@@ -84,9 +85,10 @@ public class NettyClient {
         new Thread(()->{
             Scanner scanner = new Scanner(System.in);
             LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+            SendMessageConsoleCommand sendMessageConsoleCommand = new SendMessageConsoleCommand();
             while (!Thread.interrupted()){
                 if(LoginUtil.hasLogin(channel)){
-
+                    sendMessageConsoleCommand.exec(scanner,channel);
 
                 }else{
                     loginConsoleCommand.exec(scanner,channel);

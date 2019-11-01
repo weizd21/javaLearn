@@ -27,7 +27,7 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
         // 验证登录信息合法性
 
         // 合法则记录登录回话
-        SessionUtil.bindSession(new Session(loginRequestPacket.getUserId().toString(),loginRequestPacket.getUsername()),channelHandlerContext.channel());
+        SessionUtil.bindSession(new Session(loginRequestPacket.getUserId().toString(),loginRequestPacket.getUserName()),channelHandlerContext.channel());
 
         LoginResponsePacket loginResponsePacket = new LoginResponsePacket();
         loginResponsePacket.setVersion(loginRequestPacket.getVersion());

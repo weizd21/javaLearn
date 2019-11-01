@@ -32,14 +32,14 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
         // 根据
         MessageResponsePacket messageResponsePacket = new MessageResponsePacket();
         messageResponsePacket.setMsg(messageRequestPacket.getMsg());
-        messageResponsePacket.setFromUserId(session.getUserId());
+        messageResponsePacket.setFromUserName(session.getUserName());
 
         // 获取接收方的 channel
-        Channel receiveChannel = SessionUtil.getChannel(messageRequestPacket.getToUserId());
+        Channel receiveChannel = SessionUtil.getChannel(messageRequestPacket.getToUserName());
         if(!ObjUtil.isEmpty(receiveChannel) && SessionUtil.isLogin(receiveChannel)){
             receiveChannel.writeAndFlush(messageResponsePacket);
         }else {
-            logger.info("---> 用户【{}】离线中",messageRequestPacket.getToUserId());
+            logger.info("---> 用户【{}】离线中",messageRequestPacket.getToUserName());
         }
 
 

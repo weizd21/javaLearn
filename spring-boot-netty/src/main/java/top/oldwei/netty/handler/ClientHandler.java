@@ -32,8 +32,8 @@ public class ClientHandler extends ChannelInboundHandlerAdapter {
 
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
         loginRequestPacket.setUserId(IdUtil.getSnowflake(Base.WORK_ID,Base.DATA_CENTER_ID).nextId());
-        loginRequestPacket.setUsername(IdUtil.fastSimpleUUID());
-        loginRequestPacket.setPassword(SecureUtil.md5(loginRequestPacket.getUsername()));
+        loginRequestPacket.setUserName(IdUtil.fastSimpleUUID());
+        loginRequestPacket.setPassword(SecureUtil.md5(loginRequestPacket.getUserName()));
 
         logger.info("loginRequestPacket:"+ JSONObject.toJSONString(loginRequestPacket));
 
