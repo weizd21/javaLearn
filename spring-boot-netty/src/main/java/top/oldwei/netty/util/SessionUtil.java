@@ -2,6 +2,7 @@ package top.oldwei.netty.util;
 
 import com.google.common.collect.Maps;
 import io.netty.channel.Channel;
+import io.netty.channel.group.ChannelGroup;
 import top.oldwei.netty.constant.Attribute;
 import top.oldwei.netty.domain.Session;
 
@@ -13,13 +14,14 @@ import java.util.Map;
  */
 public class SessionUtil {
 
+    private final static  Map<String, ChannelGroup> groupIdChannelGroupMap = Maps.newConcurrentMap();
 
-    private final static Map<String, Channel> userIdSessionMap = Maps.newConcurrentMap();
+    private final static Map<String, Channel> userNameSessionMap = Maps.newConcurrentMap();
 
 
     public static void bindSession(Session session, Channel channel){
         channel.attr(Attribute.SESSION).set(session);
-        userIdSessionMap.put(session.getUserName(),channel);
+        userNameSessionMap.put(session.getUserName(),channel);
     }
 
 
@@ -29,12 +31,22 @@ public class SessionUtil {
 
 
     public static Channel getChannel(String userId){
-        return userIdSessionMap.get(userId);
+        return userNameSessionMap.get(userId);
     }
 
 
     public static boolean isLogin(Channel channel){
         return channel.hasAttr(Attribute.SESSION);
     }
+
+
+    public static void addChannelGroup(String groupId,ChannelGroup channelGroup){
+        groupIdChannelGroupMap.put(groupId,channelGroup);
+    }
+
+    public static ChannelGroup getChannelGroup(String groupId){
+        return groupIdChannelGroupMap.get(groupId);
+    }
+
 
 }
