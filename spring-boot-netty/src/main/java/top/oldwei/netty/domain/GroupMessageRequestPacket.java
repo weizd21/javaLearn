@@ -1,21 +1,22 @@
 package top.oldwei.netty.domain;
 
 import lombok.Data;
-import top.oldwei.netty.base.PacketCodeC;
 import top.oldwei.netty.constant.Command;
 
 /**
  * @Author:weizd
- * @Date:19-11-4
+ * @Date:19-11-5
  */
 @Data
-public class CreateGroupRequestPacket extends Packet {
+public class GroupMessageRequestPacket extends Packet {
 
     private String groupName;
+
+    private String msg;
 
 
     @Override
     public Byte getCommand() {
-        return Command.CREATE_GROUP_REQUEST;
+        return Command.SEND_GROUP_MESSAGE_REQUEST;
     }
 }

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class SessionUtil {
 
-    private final static  Map<String, ChannelGroup> groupIdChannelGroupMap = Maps.newConcurrentMap();
+    private final static  Map<String, ChannelGroup> groupNameChannelGroupMap = Maps.newConcurrentMap();
 
     private final static Map<String, Channel> userNameSessionMap = Maps.newConcurrentMap();
 
@@ -30,8 +30,8 @@ public class SessionUtil {
     }
 
 
-    public static Channel getChannel(String userId){
-        return userNameSessionMap.get(userId);
+    public static Channel getChannel(String userName){
+        return userNameSessionMap.get(userName);
     }
 
 
@@ -40,13 +40,15 @@ public class SessionUtil {
     }
 
 
-    public static void addChannelGroup(String groupId,ChannelGroup channelGroup){
-        groupIdChannelGroupMap.put(groupId,channelGroup);
+    public static void addChannelGroup(String groupName,ChannelGroup channelGroup){
+        groupNameChannelGroupMap.put(groupName,channelGroup);
     }
 
-    public static ChannelGroup getChannelGroup(String groupId){
-        return groupIdChannelGroupMap.get(groupId);
+    public static ChannelGroup getChannelGroup(String groupName){
+        return groupNameChannelGroupMap.get(groupName);
     }
+
+
 
 
 }

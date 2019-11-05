@@ -1,30 +1,30 @@
 package top.oldwei.netty.command;
 
-import cn.hutool.core.util.IdUtil;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import top.oldwei.netty.domain.CreateGroupRequestPacket;
+import top.oldwei.netty.domain.JoinGroupRequestPacket;
 
 import java.util.Scanner;
 
 /**
  * @Author:weizd
- * @Date:19-11-4
+ * @Date:19-11-5
  */
-public class CreateGroupCommand implements ConsoleCommand{
+public class JoinGroupCommand implements ConsoleCommand {
 
-    private final static Logger logger = LoggerFactory.getLogger(CreateGroupCommand.class);
+    private final static Logger logger = LoggerFactory.getLogger(JoinGroupCommand.class);
 
     @Override
     public void exec(Scanner scanner, Channel channel) {
         logger.info("---> 请输入用户组名称：");
         String groupName  = scanner.nextLine();
 
-        CreateGroupRequestPacket createGroupRequestPacket = new CreateGroupRequestPacket();
-        createGroupRequestPacket.setGroupName(groupName);
+        JoinGroupRequestPacket joinGroupRequestPacket = new JoinGroupRequestPacket();
+        joinGroupRequestPacket.setGroupName(groupName);
 
-        channel.writeAndFlush(createGroupRequestPacket);
+        channel.writeAndFlush(joinGroupRequestPacket);
 
     }
 

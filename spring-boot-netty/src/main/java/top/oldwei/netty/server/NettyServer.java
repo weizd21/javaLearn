@@ -5,6 +5,9 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import top.oldwei.netty.handler.CreateGroupRequestHandler;
+import top.oldwei.netty.handler.GroupMessageRequestHandler;
+import top.oldwei.netty.handler.JoinGroupRequestHandler;
 import top.oldwei.netty.handler.LoginRequestHandler;
 import top.oldwei.netty.handler.MessageRequestHandler;
 import top.oldwei.netty.handler.PacketDecoder;
@@ -32,10 +35,13 @@ public class NettyServer {
                     protected void initChannel(NioSocketChannel ch) {
                         // ch.pipeline().addLast(new ServerHandler());
                         // 拆包粘包 同时过滤非约定协议的 通信
-                        ch.pipeline().addLast(new Spliter());
+//                        ch.pipeline().addLast(new Spliter());
                         ch.pipeline().addLast(new PacketDecoder());
                         ch.pipeline().addLast(new LoginRequestHandler());
                         ch.pipeline().addLast(new MessageRequestHandler());
+                        ch.pipeline().addLast(new CreateGroupRequestHandler());
+                        ch.pipeline().addLast(new JoinGroupRequestHandler());
+                        ch.pipeline().addLast(new GroupMessageRequestHandler());
                         ch.pipeline().addLast(new PacketEncoder());
 
                     }

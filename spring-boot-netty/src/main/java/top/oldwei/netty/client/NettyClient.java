@@ -11,12 +11,14 @@ import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import top.oldwei.netty.base.PacketCodeC;
+import top.oldwei.netty.command.ConsoleCommandManager;
 import top.oldwei.netty.command.LoginConsoleCommand;
 import top.oldwei.netty.command.SendMessageConsoleCommand;
 import top.oldwei.netty.constant.Base;
 import top.oldwei.netty.domain.LoginRequestPacket;
 import top.oldwei.netty.domain.MessageRequestPacket;
 import top.oldwei.netty.handler.ClientHandler;
+import top.oldwei.netty.handler.GroupMessageResponseHandler;
 import top.oldwei.netty.handler.LoginResponseHandler;
 import top.oldwei.netty.handler.MessageResponseHandler;
 import top.oldwei.netty.handler.PacketDecoder;
@@ -49,10 +51,11 @@ public class NettyClient {
                     @Override
                     protected void initChannel(Channel channel) throws Exception {
                         //channel.pipeline().addLast(new ClientHandler());
-                        channel.pipeline().addLast(new Spliter());
+//                        channel.pipeline().addLast(new Spliter());
                         channel.pipeline().addLast(new PacketDecoder());
                         channel.pipeline().addLast(new LoginResponseHandler());
                         channel.pipeline().addLast(new MessageResponseHandler());
+                        channel.pipeline().addLast(new GroupMessageResponseHandler());
                         channel.pipeline().addLast(new PacketEncoder());
                     }
                 });
@@ -79,17 +82,14 @@ public class NettyClient {
     }
 
 
-
-
     private static void startConsoleThread(Channel channel){
         new Thread(()->{
             Scanner scanner = new Scanner(System.in);
             LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
-            SendMessageConsoleCommand sendMessageConsoleCommand = new SendMessageConsoleCommand();
+            ConsoleCommandManager consoleCommandManager  = new ConsoleCommandManager();
             while (!Thread.interrupted()){
                 if(LoginUtil.hasLogin(channel)){
-                    sendMessageConsoleCommand.exec(scanner,channel);
-
+                    consoleCommandManager.exec(scanner,channel);
                 }else{
                     loginConsoleCommand.exec(scanner,channel);
                     try {
@@ -105,6 +105,33 @@ public class NettyClient {
 
         }).start();
     }
+
+
+
+//    private static void startConsoleThread(Channel channel){
+//        new Thread(()->{
+//            Scanner scanner = new Scanner(System.in);
+//            LoginConsoleCommand loginConsoleCommand = new LoginConsoleCommand();
+//            SendMessageConsoleCommand sendMessageConsoleCommand = new SendMessageConsoleCommand();
+//            while (!Thread.interrupted()){
+//                if(LoginUtil.hasLogin(channel)){
+//                    sendMessageConsoleCommand.exec(scanner,channel);
+//
+//                }else{
+//                    loginConsoleCommand.exec(scanner,channel);
+//                    try {
+//                        Thread.sleep(1000);
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//
+//
+//            }
+//
+//        }).start();
+//    }
 
 
 
