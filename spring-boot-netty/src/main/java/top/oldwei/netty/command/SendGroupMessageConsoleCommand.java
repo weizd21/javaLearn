@@ -3,6 +3,7 @@ package top.oldwei.netty.command;
 import io.netty.channel.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import top.oldwei.netty.domain.GroupMessageRequestPacket;
 
 import java.util.Scanner;
 
@@ -22,7 +23,10 @@ public class SendGroupMessageConsoleCommand implements ConsoleCommand {
         logger.info("---> 请输入信息：");
         String msg  = scanner.nextLine();
 
-
+        GroupMessageRequestPacket groupMessageRequestPacket = new GroupMessageRequestPacket();
+        groupMessageRequestPacket.setGroupName(groupName);
+        groupMessageRequestPacket.setMsg(msg);
+        channel.writeAndFlush(groupMessageRequestPacket);
 
     }
 }

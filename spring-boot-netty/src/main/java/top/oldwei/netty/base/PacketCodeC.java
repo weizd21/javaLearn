@@ -5,6 +5,11 @@ import io.netty.buffer.ByteBufAllocator;
 import top.oldwei.netty.constant.Base;
 import top.oldwei.netty.constant.Command;
 import top.oldwei.netty.constant.SerializerAlgorithm;
+import top.oldwei.netty.domain.CreateGroupRequestPacket;
+import top.oldwei.netty.domain.CreateGroupResponsePacket;
+import top.oldwei.netty.domain.GroupMessageRequestPacket;
+import top.oldwei.netty.domain.GroupMessageResponsePacket;
+import top.oldwei.netty.domain.JoinGroupRequestPacket;
 import top.oldwei.netty.domain.LoginRequestPacket;
 import top.oldwei.netty.domain.LoginResponsePacket;
 import top.oldwei.netty.domain.MessageRequestPacket;
@@ -96,6 +101,16 @@ public class PacketCodeC {
             return MessageRequestPacket.class;
         }else if(command == Command.MESSAGE_RESPONSE){
             return MessageResponsePacket.class;
+        }else if(command == Command.CREATE_GROUP_REQUEST){
+            return CreateGroupRequestPacket.class;
+        }else if(command == Command.CREATE_GROUP_RESPONSE){
+            return CreateGroupResponsePacket.class;
+        }else if(command == Command.JOIN_GROUP_REQUEST){
+            return JoinGroupRequestPacket.class;
+        }else if(command == Command.SEND_GROUP_MESSAGE_REQUEST){
+            return GroupMessageRequestPacket.class;
+        }else if(command == Command.SEND_GROUP_MESSAGE_RESPONSE){
+            return GroupMessageResponsePacket.class;
         }
         return null;
     }

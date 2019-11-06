@@ -51,7 +51,7 @@ public class NettyClient {
                     @Override
                     protected void initChannel(Channel channel) throws Exception {
                         //channel.pipeline().addLast(new ClientHandler());
-//                        channel.pipeline().addLast(new Spliter());
+                        channel.pipeline().addLast(new Spliter());
                         channel.pipeline().addLast(new PacketDecoder());
                         channel.pipeline().addLast(new LoginResponseHandler());
                         channel.pipeline().addLast(new MessageResponseHandler());
