@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: boot-admin
+
+server:
+  port: 7000
+
+
+logging:
+  file:
+    path: /home/ap/nas_a/logback/logs/spring-boot-demo-logback.log

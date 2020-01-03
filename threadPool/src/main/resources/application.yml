@@ -1,0 +1,12 @@
+server:
+  port: 7777
+
+
+
+master:
+  executor:
+    name: "masterServiceExecutor"
+    core-pool-size: 5
+    max-pool-size: 10
+    queue-capacity: 20
+    thread-name-prefix: "master-service-"

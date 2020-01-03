@@ -11,6 +11,10 @@
         <module>spring-boot-logback</module>
         <module>spring-boot-netty</module>
         <module>spark-demo01</module>
+        <module>threadPool</module>
+        <module>es</module>
+        <module>boot-admin-server</module>
+        <module>tool</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -18,16 +22,53 @@
 
 
     <properties>
-        <spring.boot.version>2.1.6.RELEASE</spring.boot.version>
+        <!-- dependencyManagement  -->
+        <spring-cloud.version>Finchley.SR2</spring-cloud.version>
+        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
+        <!--<spring.boot.version>2.2.1.RELEASE</spring.boot.version>-->
+        <elasticsearch.version>3.1.14.RELEASE</elasticsearch.version>
+        <!--<elasticsearch.version>3.2.3.RELEASE</elasticsearch.version>-->
+        <lombok.version>1.18.10</lombok.version>
         <mysql.version>8.0.16</mysql.version>
         <hutool.version>4.6.2</hutool.version>
         <guava.version>28.0-jre</guava.version>
-        <user.agent.version> 1.21</user.agent.version>
+        <user.agent.version>1.21</user.agent.version>
         <fastjson.version>1.2.62</fastjson.version>
+        <netty.version>4.1.42.Final</netty.version>
+        <spark.version>2.4.4</spark.version>
+
+
+        <!-- dependencies  -->
     </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+
 
     <dependencyManagement>
         <dependencies>
+
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
@@ -35,11 +76,46 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!--<dependency>-->
+                <!--<groupId>org.springframework.boot</groupId>-->
+                <!--<artifactId>spring-boot-configuration-processor</artifactId>-->
+                <!--<optional>true</optional>-->
+            <!--</dependency>-->
+
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-elasticsearch</artifactId>
+                <version>${elasticsearch.version}</version>
+            </dependency>
+
+
+
+
+            <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <scope>provided</scope>
+            </dependency>
+
+
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
+
             <!-- hutool工具类 -->
             <dependency>
                 <groupId>cn.hutool</groupId>
@@ -52,12 +128,7 @@
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
             </dependency>
-            <!-- 解析 UserAgent 信息 -->
-            <dependency>
-                <groupId>eu.bitwalker</groupId>
-                <artifactId>UserAgentUtils</artifactId>
-                <version>${user.agent.version}</version>
-            </dependency>
+
             <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
@@ -66,10 +137,33 @@
             </dependency>
 
 
+            <!-- 解析 UserAgent 信息 -->
+            <dependency>
+                <groupId>eu.bitwalker</groupId>
+                <artifactId>UserAgentUtils</artifactId>
+                <version>${user.agent.version}</version>
+            </dependency>
 
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
+
+
+            <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-launcher -->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-launcher_2.12</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
 
+    <dependencies>
+
+
+    </dependencies>
 
 </project>

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: es
+  data:
+    elasticsearch:
+      cluster-name: insight-application
+      cluster-nodes: 127.0.0.1:9200
+server:
+  port: 9001

@@ -8,12 +8,15 @@ import java.util.Date;
 public class Hello {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
 
         System.out.println("launcher enter time :"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
-
+        for(int i = 0;i<1000;i++){
+            System.out.println("line--------> "+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            Thread.sleep(1000);
+        }
 
         System.out.println("launcher leave time :"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
