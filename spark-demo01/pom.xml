@@ -20,6 +20,23 @@
             <artifactId>spark-launcher_2.12</artifactId>
         </dependency>
 
+
+        <!-- https://mvnrepository.com/artifact/org.apache.spark/spark-sql -->
+        <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-sql_2.12</artifactId>
+            <version>2.4.3</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.codehaus.janino</groupId>
+            <artifactId>janino</artifactId>
+            <version>3.0.8</version>
+        </dependency>
+
+
+
         <!-- hutool工具类 -->
         <dependency>
             <groupId>cn.hutool</groupId>
