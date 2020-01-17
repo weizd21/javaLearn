@@ -26,8 +26,8 @@
     <properties>
         <!-- dependencyManagement  -->
         <spring-cloud.version>Finchley.SR2</spring-cloud.version>
-        <spring.boot.version>2.0.4.RELEASE</spring.boot.version>
-        <!--<spring.boot.version>2.2.1.RELEASE</spring.boot.version>-->
+        <!--<spring.boot.version>2.0.4.RELEASE</spring.boot.version>-->
+        <spring.boot.version>2.2.1.RELEASE</spring.boot.version>
         <elasticsearch.version>3.1.14.RELEASE</elasticsearch.version>
         <!--<elasticsearch.version>3.2.3.RELEASE</elasticsearch.version>-->
         <lombok.version>1.18.10</lombok.version>
