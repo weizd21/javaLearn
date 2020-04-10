@@ -1,9 +1,8 @@
 package top.oldwei.common.dto;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
 
@@ -12,8 +11,6 @@ import java.io.Serializable;
  * @Date:20-1-16
  */
 @Data
-@Setter
-@Getter
 @ToString
 public class FileUploadDTO implements Serializable {
 
@@ -40,7 +37,7 @@ public class FileUploadDTO implements Serializable {
     /**
      * 文件名
      */
-    private String fileName;
+    private String filename;
     /**
      * 相对路径
      */
@@ -49,7 +46,6 @@ public class FileUploadDTO implements Serializable {
      * 总块数
      */
     private Integer totalChunks;
-
 
 
 }

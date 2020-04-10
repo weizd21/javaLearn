@@ -48,6 +48,9 @@ public class NettyServer {
                 });
 
         serverBootstrap.bind(8600);
+
+
+        System.out.println("---->");
     }
 
 

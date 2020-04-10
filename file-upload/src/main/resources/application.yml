@@ -1,4 +1,14 @@
 server:
-  port: 5000
+  port: 8081
+
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1024MB
 
 
+
+
+oldwei:
+  location:
+    chunkFile: /home/ap/aipf/chunk

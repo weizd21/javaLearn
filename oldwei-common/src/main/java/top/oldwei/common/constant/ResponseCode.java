@@ -12,13 +12,13 @@ public interface ResponseCode {
     /**
      * 报错
      */
-    Integer ERROR = 5001;
+    Integer ERROR = 500;
 
 
     /**
      * 成功
      */
-    Integer SUCCESS = 2000;
+    Integer SUCCESS = 200;
 
 
 }

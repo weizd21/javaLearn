@@ -14,16 +14,19 @@ public class SubListTest {
     public static void main(String[] args) {
 
 
-        Integer [] arr = {1,2,3,4};
+//        Integer [] arr = {1,2,3,4};
+//
+//        List<Integer> list = Arrays.asList(arr);
+//
+//        System.out.println(list);
+//
+//        list = list.subList(4,4);
+//
+//        System.out.println(list);
 
-        List<Integer> list = Arrays.asList(arr);
+        String path = "/home/ap/aipf/";
 
-        System.out.println(list);
-
-        list = list.subList(4,4);
-
-        System.out.println(list);
-
+        System.out.println(path.substring(path.lastIndexOf("/")+1));
 
     }
 }
